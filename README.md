@@ -23,6 +23,6 @@
     - [ ] Armazenamento no LocalStorage
     - [ ] Uso de plugin JQuery
 - [ ] JPA
-    - [ ] No mínimo 4 entidades, contabilizando as entidades User e Role, se houverem.
+    - [ ] No mínimo 2 entidades.
     - [ ] Operações de CRUD. 
   

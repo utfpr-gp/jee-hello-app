@@ -1,5 +1,6 @@
 package br.edu.utfpr.hello_app.controller;
 
+import br.edu.utfpr.hello_app.model.domain.User;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import javax.servlet.*;
@@ -7,7 +8,9 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 @WebServlet(name = "AgeCalculatorServlet", value = "/calculadora-idade")
 public class AgeCalculatorController extends HttpServlet {
@@ -23,6 +26,9 @@ public class AgeCalculatorController extends HttpServlet {
             Integer yearInt = Integer.parseInt(year);
 
             int age = calculateAge(yearInt);
+
+            User user = new User(name, yearInt, age);
+            request.setAttribute("user", user);
             request.setAttribute("age", age);
             request.getRequestDispatcher("/WEB-INF/view/age-result.jsp").forward(request, response);
         }
@@ -38,7 +44,20 @@ public class AgeCalculatorController extends HttpServlet {
 
         int age = calculateAge(yearInt);
 
+        List<User> usersApp = (List<User>) getServletContext().getAttribute("users");
+        if(usersApp == null){
+            usersApp = new ArrayList<User>();
+            getServletContext().setAttribute("users", usersApp);
+        }
+
+        User user = new User(name, yearInt, age);
+
+        usersApp.add(user);
+        getServletContext().setAttribute("users", usersApp);
+
+        request.setAttribute("flash.user", user);
         request.setAttribute("flash.age", age);
+
         request.getRequestDispatcher("/calculadora-data").forward(request, response);
     }
 

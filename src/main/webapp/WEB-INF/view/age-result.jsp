@@ -14,8 +14,10 @@
     A sua idade é ${age}
     <br>
     Data: ${date}
+    Dados do usuário: ${user.name} - ${user.age}
     Contador Global: ${counterApplication}
     Contador Sessão: ${counterSession}
+    Primeiro usuário: ${users[0].name}
 
 </body>
 </html>

@@ -14,14 +14,14 @@
     - [x] Tratamento por código de status ou exceção específica
     - [x] Tratamento de erros genérico
 - [x] Expression Language (EL) para acessar os objetos de domínio (beans) da camada de modelo do MVC
-- [ ] JSTL e TagLib
+- [x] JSTL e TagLib
   - [x] forEach
   - [x] if
   - [x] Template com cabeçalho e rodapé
-- [ ] JavaScript
-    - [ ] Requisição AJAX
-    - [ ] Armazenamento no LocalStorage
-    - [ ] Uso de plugin JQuery
+- [x] JavaScript
+    - [x] Requisição AJAX
+    - [x] Armazenamento no LocalStorage
+    - [x] Uso de plugin JQuery
 - [ ] JPA
     - [ ] No mínimo 2 entidades.
     - [ ] Operações de CRUD. 

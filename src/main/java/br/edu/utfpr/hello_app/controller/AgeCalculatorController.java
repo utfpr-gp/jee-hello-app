@@ -1,6 +1,9 @@
 package br.edu.utfpr.hello_app.controller;
 
 import br.edu.utfpr.hello_app.model.domain.User;
+import br.edu.utfpr.hello_app.model.dto.UserDTO;
+import br.edu.utfpr.hello_app.model.mapper.UserMapper;
+import br.edu.utfpr.hello_app.service.UserService;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import javax.servlet.*;
@@ -14,6 +17,9 @@ import java.util.List;
 
 @WebServlet(name = "AgeCalculatorServlet", value = "/calculadora-idade")
 public class AgeCalculatorController extends HttpServlet {
+
+    UserService userService = new UserService();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("nome");
@@ -25,9 +31,10 @@ public class AgeCalculatorController extends HttpServlet {
         else{
             Integer yearInt = Integer.parseInt(year);
 
-            int age = calculateAge(yearInt);
+            int age = userService.calculateAge(yearInt);
 
             User user = new User(name, yearInt, age);
+            userService.save(user);
             request.setAttribute("user", user);
             request.setAttribute("age", age);
             request.getRequestDispatcher("/WEB-INF/view/age-result.jsp").forward(request, response);
@@ -42,7 +49,7 @@ public class AgeCalculatorController extends HttpServlet {
 
         Integer yearInt = Integer.parseInt(year);
 
-        int age = calculateAge(yearInt);
+        int age = userService.calculateAge(yearInt);
 
         List<User> usersApp = (List<User>) getServletContext().getAttribute("users");
         if(usersApp == null){
@@ -51,18 +58,19 @@ public class AgeCalculatorController extends HttpServlet {
         }
 
         User user = new User(name, yearInt, age);
+        //persiste no banco de dados
+        userService.save(user);
+        UserDTO userDTO = UserMapper.toDTO(user);
 
         usersApp.add(user);
         getServletContext().setAttribute("users", usersApp);
 
-        request.setAttribute("flash.user", user);
+        //envio do DTO para a camada de visão
+        request.setAttribute("flash.user", userDTO);
         request.setAttribute("flash.age", age);
 
         request.getRequestDispatcher("/calculadora-data").forward(request, response);
     }
 
-    private int calculateAge(int year){
-        int yearNow = Calendar.getInstance().get(Calendar.YEAR);
-        return yearNow - year;
-    }
+
 }

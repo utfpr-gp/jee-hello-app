@@ -5,21 +5,19 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
-@Data(staticConstructor = "of")
+@Table(name = "cities")
+@Data
 @NoArgsConstructor
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-public class User {
+public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NonNull
     private String name;
-    @NonNull @Column(name = "birth_year")
-    private int year;
-    @NonNull
-    private int age;
 
     @ManyToOne
-    private City city;
+    @NonNull
+    private State state;
 }

@@ -5,7 +5,7 @@
 
 <t:template title="Tela Inicial">
     <jsp:body>
-        <h1>Tela Inicial</h1>
+        <h1>Minha Tela Inicial</h1>
 
         <a href="hello-servlet">Alô Mundo!</a>
         <a href="calculadora-idade">Calculadora de Idade!</a>

@@ -4,7 +4,7 @@ import br.edu.utfpr.hello_app.model.domain.User;
 import br.edu.utfpr.hello_app.model.dto.UserDTO;
 import br.edu.utfpr.hello_app.model.mapper.UserMapper;
 import br.edu.utfpr.hello_app.service.UserService;
-import sun.java2d.pipe.SpanShapeRenderer;
+
 
 import javax.servlet.*;
 import javax.servlet.http.*;

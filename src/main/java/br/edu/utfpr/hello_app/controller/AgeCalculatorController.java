@@ -22,24 +22,7 @@ public class AgeCalculatorController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("nome");
-        String year = request.getParameter("ano");
-
-        if(name == null || year == null){
-            request.getRequestDispatcher("/WEB-INF/view/age-calculator.jsp").forward(request, response);
-        }
-        else{
-            Integer yearInt = Integer.parseInt(year);
-
-            int age = userService.calculateAge(yearInt);
-
-            User user = new User(name, yearInt, age);
-            userService.save(user);
-            request.setAttribute("user", user);
-            request.setAttribute("age", age);
-            request.getRequestDispatcher("/WEB-INF/view/age-result.jsp").forward(request, response);
-        }
-
+        request.getRequestDispatcher("/WEB-INF/view/age-calculator.jsp").forward(request, response);
     }
 
     @Override
@@ -58,17 +41,21 @@ public class AgeCalculatorController extends HttpServlet {
         }
 
         User user = new User(name, yearInt, age);
+
         //persiste no banco de dados
         userService.save(user);
+
+        //cria o DTO para encaminhar para a visão
         UserDTO userDTO = UserMapper.toDTO(user);
 
         usersApp.add(user);
         getServletContext().setAttribute("users", usersApp);
 
-        //envio do DTO para a camada de visão
+        //guarda os dados no escopo de flash, pois será feito um redirecionamento no servlet seguinte
         request.setAttribute("flash.user", userDTO);
         request.setAttribute("flash.age", age);
 
+        //encaminha para outro servlet calcular a segunda etapa do processamento
         request.getRequestDispatcher("/calculadora-data").forward(request, response);
     }
 

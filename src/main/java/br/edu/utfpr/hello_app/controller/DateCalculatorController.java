@@ -28,7 +28,7 @@ public class DateCalculatorController extends HttpServlet {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         String dateFormatted = sdf.format(calendar.getTime());
 
-        Integer counterApplication = (Integer) request.getServletContext().getAttribute(Constants.COUNTER_APPLICATION);
+        Integer counterApplication = (Integer) getServletContext().getAttribute(Constants.COUNTER_APPLICATION);
         if(counterApplication == null){
             counterApplication = 0;
         }
@@ -45,8 +45,11 @@ public class DateCalculatorController extends HttpServlet {
         Cookie cookie = new Cookie("counter", String.valueOf(counterSession));
         cookie.setMaxAge(60 * 60 * 24);// 1 dia
 
+        //guarda no escopo de flash por se tratar de redirecionamento
         request.setAttribute("flash.date", dateFormatted);
         response.addCookie(cookie);
+
+        //como é POST, faz redirecionamento
         response.sendRedirect("resultado-idade");
 
     }
